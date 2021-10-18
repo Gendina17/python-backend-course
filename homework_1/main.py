@@ -68,7 +68,7 @@ class TicTacGame:
                 elif validation is None:
                     print("Данное число уже вводилось ранее, введите другое!")
                 else:
-                    print("Число должно быть в диапазоне от 1 до 10!")
+                    print("Число должно быть в диапазоне от 0 до 9!")
             except ValueError:
                 print("Введите, пожалуйста число!")
         self.end_game()
