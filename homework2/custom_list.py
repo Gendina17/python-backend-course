@@ -19,7 +19,7 @@ class CustomList(list):
 
     def __getitem__(self, item):
         if item < len(self):
-            return super(CustomList, self).__getitem__(item)
+            return super().__getitem__(item)
         return 0
 
     def __lt__(self, other):

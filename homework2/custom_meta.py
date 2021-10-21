@@ -4,11 +4,11 @@
 class CustomMeta(type):
     def __new__(cls, name, bases, dct):
         custom_attr = {}
-        for name, value in dct.items():
-            if not name.startswith('__'):
-                custom_attr['custom_' + name] = value
+        for key, value in dct.items():
+            if not key.startswith('__'):
+                custom_attr['custom_' + key] = value
             else:
-                custom_attr[name] = value
+                custom_attr[key] = value
 
         def __setattr__(self, key, value):
             self.__dict__['custom_' + key] = value
