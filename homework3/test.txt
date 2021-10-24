@@ -1,0 +1,140 @@
+test 0.0.0.0:80
+
+This is ApacheBench, Version 2.3 <$Revision: 1879490 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient)
+
+
+Server Software:        nginx/1.21.3
+Server Hostname:        127.0.0.1
+Server Port:            80
+
+Document Path:          /
+Document Length:        66 bytes
+
+Concurrency Level:      100
+Time taken for tests:   13.648 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      2970000 bytes
+HTML transferred:       660000 bytes
+Requests per second:    732.73 [#/sec] (mean)
+Time per request:       136.476 [ms] (mean)
+Time per request:       1.365 [ms] (mean, across all concurrent requests)
+Transfer rate:          212.52 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0  132 1307.9      0   13145
+Processing:     0    5   6.4      4      69
+Waiting:        0    5   6.4      4      69
+Total:          0  136 1307.7      4   13150
+
+Percentage of the requests served within a certain time (ms)
+  50%      4
+  66%      5
+  75%      5
+  80%      5
+  90%      5
+  95%      6
+  98%     47
+  99%  13144
+ 100%  13150 (longest request)
+__________________________________________________________________________________________________________________
+test 0.0.0.0:80/api
+
+This is ApacheBench, Version 2.3 <$Revision: 1879490 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient)
+
+
+Server Software:        nginx/1.21.3
+Server Hostname:        127.0.0.1
+Server Port:            80
+
+Document Path:          /api/
+Document Length:        157 bytes
+
+Concurrency Level:      100
+Time taken for tests:   57.954 seconds
+Complete requests:      10000
+Failed requests:        0
+Non-2xx responses:      10000
+Total transferred:      3090000 bytes
+HTML transferred:       1570000 bytes
+Requests per second:    172.55 [#/sec] (mean)
+Time per request:       579.540 [ms] (mean)
+Time per request:       5.795 [ms] (mean, across all concurrent requests)
+Transfer rate:          52.07 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.2      0       3
+Processing:     0  519 3220.7      0   26112
+Waiting:        0  519 3220.7      0   26112
+Total:          0  519 3220.8      0   26112
+
+Percentage of the requests served within a certain time (ms)
+  50%      0
+  66%      0
+  75%      0
+  80%      0
+  90%      6
+  95%    102
+  98%   6771
+  99%  19666
+ 100%  26112 (longest request)
+_________________________________________________________________________________________________________________
+test 0.0.0.0:8000
+
+This is ApacheBench, Version 2.3 <$Revision: 1879490 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient)
+This is ApacheBench, Version 2.3 <$Revision: 1879490 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient)
+
+
+Server Software:        gunicorn
+Server Hostname:        127.0.0.1
+Server Port:            8000
+
+Document Path:          /
+Document Length:        46 bytes
+
+Concurrency Level:      100
+Time taken for tests:   1.668 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      1910000 bytes
+HTML transferred:       460000 bytes
+Requests per second:    5993.86 [#/sec] (mean)
+Time per request:       16.684 [ms] (mean)
+Time per request:       0.167 [ms] (mean, across all concurrent requests)
+Transfer rate:          1118.00 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.2      0       3
+Processing:     1   16   3.2     16      46
+Waiting:        1   16   3.1     16      46
+Total:          4   17   3.1     16      46
+
+Percentage of the requests served within a certain time (ms)
+  50%     16
+  66%     16
+  75%     16
+  80%     16
+  90%     17
+  95%     18
+  98%     22
+  99%     44
+ 100%     46 (longest request)
