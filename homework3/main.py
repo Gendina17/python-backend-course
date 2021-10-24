@@ -1,6 +1,5 @@
 from datetime import datetime
 import json
-import sys
 
 def app(environ, start_response):
 	data = {'time': str(datetime.now().time()), 'url': environ["HTTP_HOST"]}
