@@ -78,3 +78,19 @@ class TestCustomList(unittest.TestCase):
         self.assertTrue(self.long_custom_list >= self.long_normal_list)
         self.assertTrue(self.short_custom_list >= self.long_custom_list)
         self.assertFalse(self.long_custom_list >= self.short_normal_list)
+
+    def test_return_custom_list_adding(self):
+        custom_custom = self.short_custom_list + self.long_custom_list
+        list_custom = self.long_normal_list + self.long_custom_list
+        custom_list = self.long_custom_list + self.long_normal_list
+        self.assertTrue(isinstance(custom_custom, CustomList))
+        self.assertTrue(isinstance(custom_list, CustomList))
+        self.assertTrue(isinstance(list_custom, CustomList))
+
+    def test_return_custom_list_subtraction(self):
+        custom_custom = self.short_custom_list - self.long_custom_list
+        list_custom = self.long_normal_list - self.long_custom_list
+        custom_list = self.long_custom_list - self.long_normal_list
+        self.assertTrue(isinstance(custom_custom, CustomList))
+        self.assertTrue(isinstance(custom_list, CustomList))
+        self.assertTrue(isinstance(list_custom, CustomList))

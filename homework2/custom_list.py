@@ -4,14 +4,14 @@
 class CustomList(list):
     def __add__(self, other):
         other = CustomList(other)
-        return [self[i] + other[i] for i in range(max(len(self), len(other)))]
+        return CustomList([self[i] + other[i] for i in range(max(len(self), len(other)))])
 
     def __radd__(self, other):
         return self + other
 
     def __sub__(self, other):
         other = CustomList(other)
-        return [self[i] - other[i] for i in range(max(len(self), len(other)))]
+        return CustomList([self[i] - other[i] for i in range(max(len(self), len(other)))])
 
     def __rsub__(self, other):
         other = CustomList(other)
