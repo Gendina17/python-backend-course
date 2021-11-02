@@ -1,4 +1,4 @@
-from django.http import JsonResponse, HttpResponseNotAllowed
+from django.http import JsonResponse, HttpResponse
 from users.views import USERS
 from packages.views import PACKAGES
 
@@ -19,7 +19,8 @@ def index(request):
             orders.append(order)
         return JsonResponse(orders, safe=False)
     else:
-        raise HttpResponseNotAllowed(f'Method {request.method} not allowed')
+        return JsonResponse({'sucsses': False, 'error': f'Method {request.method} not allowed'},
+                            content_type="application/json", status=405)
 
 
 def show(request, user_id):
@@ -32,7 +33,8 @@ def show(request, user_id):
                 orders.append(order)
         return JsonResponse(orders, safe=False)
     else:
-        raise HttpResponseNotAllowed(f'Method {request.method} not allowed')
+        return JsonResponse({'sucsses': False, 'error': f'Method {request.method} not allowed'},
+                            content_type="application/json", status=405)
 
 
 def create(request):
@@ -44,4 +46,5 @@ def create(request):
                        'state': request.POST.get("state"), 'number_rest_days': request.POST.get("number_rest_days")})
         return JsonResponse(ORDERS[-1], safe=False)
     else:
-        raise HttpResponseNotAllowed(f'Method {request.method} not allowed')
+        return JsonResponse({'sucsses': False, 'error': f'Method {request.method} not allowed'},
+                            content_type="application/json", status=405)

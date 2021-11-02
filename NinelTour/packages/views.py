@@ -1,4 +1,4 @@
-from django.http import JsonResponse, HttpResponseNotAllowed
+from django.http import JsonResponse
 
 PACKAGES = [{'id': 1, 'hotel_name': 'Лазурный берег', 'tour_operator': 'Pegast', 'airline': 'S7',
              'departure_city': 'Москва', 'arrival_city': 'Анталия', 'departure_country': 'Турция'},
@@ -12,7 +12,8 @@ def index(request):
     if request.method == 'GET':
         return JsonResponse(PACKAGES, safe=False)
     else:
-        raise HttpResponseNotAllowed(f'Method {request.method} not allowed')
+        return JsonResponse({'sucsses': False, 'error': f'Method {request.method} not allowed'},
+                            content_type="application/json", status=405)
 
 
 def show(request, departure_country):
@@ -23,7 +24,8 @@ def show(request, departure_country):
                 packages.append(package)
         return JsonResponse(packages, safe=False)
     else:
-        raise HttpResponseNotAllowed(f'Method {request.method} not allowed')
+        return JsonResponse({'sucsses': False, 'error': f'Method {request.method} not allowed'},
+                            content_type="application/json", status=405)
 
 
 def create(request):
@@ -34,4 +36,5 @@ def create(request):
                          'departure_country': request.POST.get("departure_country")})
         return JsonResponse(PACKAGES[-1], safe=False)
     else:
-        raise HttpResponseNotAllowed(f'Method {request.method} not allowed')
+        return JsonResponse({'sucsses': False, 'error': f'Method {request.method} not allowed'},
+                            content_type="application/json", status=405)
