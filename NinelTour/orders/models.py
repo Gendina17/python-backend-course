@@ -5,9 +5,9 @@ from packages.models import Package
 
 class Order(models.Model):
     STATES = [
-        ('b', 'booked'), ('p', 'paid'), ('conf', 'confirmed'),
-        ('d', 'deposit'), ('t', 'trip'), ('can', 'cancelled'),
-        ('comp', 'completed')
+        ('booked', 'Забронирован'), ('paid', 'Оплачен'), ('confirmed', 'Подтвержден'),
+        ('deposit', 'Депосит'), ('trip', 'Отдыхает'), ('cancelled', 'Отменен'),
+        ('completed', 'Завершен')
     ]
 
     user = models.ForeignKey(User, null=False, on_delete=models.CASCADE, verbose_name='Клиент')
@@ -19,4 +19,8 @@ class Order(models.Model):
     price = models.IntegerField(null=True, verbose_name='Цена')
 
     def __str__(self):
-        return 'Заказ'
+        return f'Заказ № {self.id}'
+
+    class Meta:
+        verbose_name_plural = "Заказы"
+        verbose_name = 'Заказ'

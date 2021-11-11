@@ -25,6 +25,10 @@ class Package(models.Model):
     insurance = models.BooleanField(null=False, default=False, verbose_name='Наличие страховки')
 
     def __str__(self):
-        return 'Туристический пакет'
+        return f'Туристический пакет №{self.id}'
+
+    class Meta:
+        verbose_name_plural = "Туристические пакеты"
+        verbose_name = 'Туристический пакет'
 
 

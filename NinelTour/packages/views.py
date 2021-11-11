@@ -1,40 +1,50 @@
-from django.http import JsonResponse
-
-PACKAGES = [{'id': 1, 'hotel_name': 'Лазурный берег', 'tour_operator': 'Pegast', 'airline': 'S7',
-             'departure_city': 'Москва', 'arrival_city': 'Анталия', 'departure_country': 'Турция'},
-            {'id': 2, 'hotel_name': 'Туса Джуса', 'tour_operator': 'Coral', 'airline': 'Aeroflot',
-             'departure_city': 'Казань', 'arrival_city': 'Каир', 'departure_country': 'Египет'},
-            {'id': 3, 'hotel_name': 'Ласковое море', 'tour_operator': 'TezTour', 'airline': 'UralAirlines',
-             'departure_city': 'Санкт-Петербург', 'arrival_city': 'Кемер', 'departure_country': 'Турция'}]
+import json
+from django.core import serializers
+from django.http import JsonResponse, HttpResponse
+from django.views.decorators.http import require_POST, require_GET, require_http_methods
+from packages.models import Package
+from django.core.exceptions import ValidationError
 
 
+@require_GET
 def index(request):
-    if request.method == 'GET':
-        return JsonResponse(PACKAGES, safe=False)
-    else:
-        return JsonResponse({'sucsses': False, 'error': f'Method {request.method} not allowed'},
-                            content_type="application/json", status=405)
+    packages = serializers.serialize('json', Package.objects.all())
+    return HttpResponse(packages, content_type='application/json')
 
 
+@require_GET
 def show(request, departure_country):
-    if request.method == 'GET':
-        packages = []
-        for package in PACKAGES:
-            if package['departure_country'] == departure_country:
-                packages.append(package)
-        return JsonResponse(packages, safe=False)
-    else:
-        return JsonResponse({'sucsses': False, 'error': f'Method {request.method} not allowed'},
-                            content_type="application/json", status=405)
+    packages = serializers.serialize('json', Package.objects.filter(departure_country=departure_country))
+    if len(packages) == 2:
+        return JsonResponse({'error': 'Не найдено ни одного туристического пакета'}, status=404)
+    return HttpResponse(packages, content_type='application/json')
 
 
+@require_POST
 def create(request):
-    if request.method == 'POST':
-        PACKAGES.append({'id': len(PACKAGES) + 1, 'hotel_name': request.POST.get("hotel_name"),
-                         'tour_operator': request.POST.get("tour_operator"), 'airline': request.POST.get("airline"),
-                         'departure_city': request.POST.get("departure_city"), 'arrival_city': request.POST.get("arrival_city"),
-                         'departure_country': request.POST.get("departure_country")})
-        return JsonResponse(PACKAGES[-1], safe=False)
-    else:
-        return JsonResponse({'sucsses': False, 'error': f'Method {request.method} not allowed'},
-                            content_type="application/json", status=405)
+    params = {key: value for key, value in request.POST.items()}
+    try:
+        package = Package.objects.create(**params)
+        return HttpResponse(serializers.serialize('json', package), content_type='application/json')
+    except ValidationError:
+        return JsonResponse({'error': 'Произошла ошибка валидации данных'})
+
+
+@require_http_methods(['PUT'])
+def update(request, id):
+    try:
+        count = Package.objects.filter(id=id).update(**json.loads(request.body))
+        if count == 0:
+            return JsonResponse({'error': 'Не удалось обновить объект'})
+        return JsonResponse({'message': f'Туристический пакет с id = {id} обновлен успешно'})
+    except ValidationError:
+        return JsonResponse({'error': 'Произошла ошибка валидации данных'})
+
+
+@require_http_methods(['DELETE'])
+def delete(request, id):
+    code, data = Package.objects.filter(id=id).delete()
+    if code == 0:
+        return JsonResponse({'error': f'Пакет с id = {id} не найден'}, status=404)
+    return JsonResponse({'message': f'Пакет с  id = {id} удален'})
+

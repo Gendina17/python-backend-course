@@ -1,36 +1,47 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from django.views.decorators.http import require_POST, require_GET, require_http_methods
+import json
+from django.core import serializers
+from django.core.exceptions import ValidationError
+from django.shortcuts import get_object_or_404
+from users.models import User
 
-USERS = [{'id': 1, 'name': 'Нина', 'surname': 'Гендина', 'birthday': '17-06-2001', 'gender': 'ж'},
-         {'id': 2, 'name': 'Роман', 'surname': 'Баканов', 'birthday': '26-05-2001', 'gender': 'м'},
-         {'id': 3, 'name': 'Дмитрий', 'surname': 'Пудовкин', 'birthday': '04-11-2001', 'gender': 'м'},
-         {'id': 4, 'name': 'Сергей', 'surname': 'Шишкин', 'birthday': '21-06-2001', 'gender': 'м'}]
 
-
+@require_GET
 def index(request):
-    if request.method == 'GET':
-        return JsonResponse(USERS, safe=False)
-    else:
-        return JsonResponse({'sucsses': False, 'error': f'Method {request.method} not allowed'},
-                            content_type="application/json", status=405)
+    users = serializers.serialize('json', User.objects.all())
+    return HttpResponse(users, content_type='application/json')
 
 
+@require_GET
 def show(request, id):
-    if request.method == 'GET':
-        if id in range(len(USERS) + 1):
-            return JsonResponse(USERS[id - 1], safe=False)
-        else:
-            return JsonResponse({'sucsses': False, 'error': f'User with id = {id} don\'t exist '},
-                                content_type="application/json", status=404)
-    else:
-        return JsonResponse({'sucsses': False, 'error': f'Method {request.method} not allowed'},
-                            content_type="application/json", status=405)
+    user = get_object_or_404(User, id=id)
+    return HttpResponse(serializers.serialize('json', user), content_type='application/json')
 
 
+@require_POST
 def create(request):
-    if request.method == 'POST':
-        USERS.append({'id': len(USERS) + 1, 'name': request.POST.get("name"), 'surname': request.POST.get("surname"),
-                      'birthday': request.POST.get("birthday"), 'gender': request.POST.get("gender")})
-        return JsonResponse(USERS[-1], safe=False)
-    else:
-        return JsonResponse({'sucsses': False, 'error': f'Method {request.method} not allowed'},
-                            content_type="application/json", status=405)
+    params = {key: value for key, value in request.POST.items()}
+    try:
+        user = User.objects.create(**params)
+        return HttpResponse(serializers.serialize('json', user), content_type='application/json')
+    except ValidationError:
+        return JsonResponse({'error': 'Произошла ошибка валидации данных'})
+
+@require_http_methods(['PUT'])
+def update(request, id):
+    try:
+        count = User.objects.filter(id=id).update(**json.loads(request.body))
+        if count == 0:
+            return JsonResponse({'error': 'Не удалось обновить клиента'})
+        return JsonResponse({'message': f'Клиент с id = {id} обновлен успешно'})
+    except ValidationError:
+        return JsonResponse({'error': 'Произошла ошибка валидации данных'})
+
+
+@require_http_methods(['DELETE'])
+def delete(request, id):
+    code, data = User.objects.filter(id=id).delete()
+    if code == 0:
+        return JsonResponse({'error': f'Клиент с id = {id} не найден'}, status=404)
+    return JsonResponse({'message': f'Клиент с  id = {id} удален'})

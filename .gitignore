@@ -47,3 +47,4 @@ test-journal
 .mypy_cache/
 .component-names.json
 .local-names.json
+db.sqlite3
