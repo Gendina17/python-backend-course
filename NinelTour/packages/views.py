@@ -27,7 +27,7 @@ def create(request):
         package = Package.objects.create(**params)
         return HttpResponse(serializers.serialize('json', package), content_type='application/json')
     except ValidationError:
-        return JsonResponse({'error': 'Произошла ошибка валидации данных'})
+        return JsonResponse({'error': 'Произошла ошибка валидации данных'}, status=400)
 
 
 @require_http_methods(['PUT'])
@@ -35,10 +35,10 @@ def update(request, id):
     try:
         count = Package.objects.filter(id=id).update(**json.loads(request.body))
         if count == 0:
-            return JsonResponse({'error': 'Не удалось обновить объект'})
+            return JsonResponse({'error': 'Не удалось обновить объект'}, status=404)
         return JsonResponse({'message': f'Туристический пакет с id = {id} обновлен успешно'})
     except ValidationError:
-        return JsonResponse({'error': 'Произошла ошибка валидации данных'})
+        return JsonResponse({'error': 'Произошла ошибка валидации данных'}, status=400)
 
 
 @require_http_methods(['DELETE'])

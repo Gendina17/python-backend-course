@@ -28,9 +28,8 @@ def create(request):
         user = User.objects.create(**params)
         return HttpResponse(serializers.serialize('json', User.objects.filter(id=user.id)),
                             content_type='application/json')
-        return HttpResponse('dsfds', content_type='application/json')
     except ValidationError:
-        return JsonResponse({'error': 'Произошла ошибка валидации данных'})
+        return JsonResponse({'error': 'Произошла ошибка валидации данных'}, status=400)
 
 
 @require_http_methods(['PUT'])
@@ -38,10 +37,10 @@ def update(request, id):
     try:
         count = User.objects.filter(id=id).update(**json.loads(request.body))
         if count == 0:
-            return JsonResponse({'error': 'Не удалось обновить клиента'})
+            return JsonResponse({'error': 'Не удалось обновить клиента'}, status=400)
         return JsonResponse({'message': f'Клиент с id = {id} обновлен успешно'})
     except ValidationError:
-        return JsonResponse({'error': 'Произошла ошибка валидации данных'})
+        return JsonResponse({'error': 'Произошла ошибка валидации данных'}, status=400)
 
 
 @require_http_methods(['DELETE'])
