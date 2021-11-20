@@ -1,13 +1,13 @@
 from packages.serializers import PackageSerializer
 from packages.models import Package
-from application.views import UniversalViewSet
+from rest_framework import viewsets
+from application.views import login_required
+from django.utils.decorators import method_decorator
 
 
-class PackageViewSet(UniversalViewSet):
+@method_decorator(login_required, name='dispatch')
+class PackageViewSet(viewsets.ModelViewSet):
     serializer_class = PackageSerializer
+    queryset = Package.objects.all()
+    http_method_names = ['get', 'head', 'options', 'post', 'put', 'patch']
 
-    def get_queryset(self):
-        if self.action in ['destroy', 'update', 'partial_update']:
-            return Package.objects.filter(id=self.request.user.id)
-        else:
-            return Package.objects.all()

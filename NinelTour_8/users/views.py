@@ -1,10 +1,14 @@
 from users.serializers import UserSerializer
 from users.models import User
-from application.views import UniversalViewSet
+from rest_framework import viewsets
+from application.views import login_required
+from django.utils.decorators import method_decorator
 
 
-class UserViewSet(UniversalViewSet):
+@method_decorator(login_required, name='dispatch')
+class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
+    http_method_names = ['get', 'head', 'options', 'delete', 'put', 'patch']
 
     def get_queryset(self):
         if self.action in ['destroy', 'update', 'partial_update']:
