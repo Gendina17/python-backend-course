@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+}
+
+header {
+    background: #ffebee ;
+    width: 100%;
+    height: 85px;
+    display: inline-flex;
+    color: #fff;
+    text-shadow: black 0 0 2px;
+}
+
+footer {
+    background: #ffebee;
+    text-align: center;
+    height: 40px;
+    padding-top: 30px;
+    color: #fff;
+    text-shadow: black 0 0 2px;
+}
+
+#title{
+ font-size: 20px;
+    margin-top: 30px;
+    margin-left: 10px;
+}
+
+#slogan{
+ font-size: 20px;
+ list-style: none;
+ position: absolute;
+ top: 10px;
+ right: 100px;
+ margin-top: 17px;
+}
+
+img {
+    width: 100px;
+    height: 90px;
+}
+
+main {
+    text-align: center;
+    background: url("../../static/img/back.png");
+    height: 65.6%;
+    padding-top: 10%;
+    font-size: 20px;
+    box-shadow: inset 0 0 6px;
+}
+
+#header_left {
+    display: flex;
+}
+
+#bottom_text {
+    margin-top: 200px;
+}
+p {
+    margin-top: 20px;
+}
+
+.beauty_but {
+    width: 120px;
+    height: 40px;
+    background: inherit;
+    border: 1px solid black;
+    border-radius: 10%;
+    font-size: 15px;
+}
+
+.beauty_but:hover {
+    background: #ffebee;
+}
+
+a {
+    color: black;
+}
+
+.facebook_but {
+    width: 260px;
+    height: 75px;
+    background: inherit;
+    border: 1px solid black;
+    font-size: 20px;
+    position: center;
+    margin-left: 40%;
+    margin-top: 20%;
+    margin-bottom: 30px;
+}
+
+.facebook_but:hover {
+    background: #ffebee;
+}
+
+body {
+    background: url("../../static/img/back.png");
+}
+
+.on_main {
+    margin-left: 45%;
+}
+
+.a {
+    margin-left: 20px;
+}

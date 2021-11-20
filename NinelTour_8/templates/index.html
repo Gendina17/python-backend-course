@@ -1,0 +1,39 @@
+{% load static %}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>NinelTour</title>
+    <link href="{% static 'css/index.css' %}" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/logo.ico' %}">
+  </head>
+<body>
+<header>
+    <div id="header_left">
+        <img src="{% static 'img/logo.ico' %}">
+        <div id="title">NinelTour</div>
+    </div>
+    <div id="header_right">
+        <span id="slogan">Лучшее турагентство с заботой о Вас ❤</span>
+    </div>
+</header>
+<main>
+    <p>Уважаемый клиент {{ name }} {{ surname }}, мы рады приветствовать Вас на страничке нашего лучшего турагентства!</p>
+    <p>У нас вы можете выбрать подходящий отель в нужной стране или удобные перелеты, а также оформить заказ.</p>
+    <p>Мы в свою очередь гарантируем Вам помощь по всем вопросам в любое время!</p>
+    <p id="bottom_text">Интересных поездок и незабываемых путешествий! С любовью, NinelTour ❤</p>
+    <p>
+        <button class="beauty_but"><a href="{% url 'logout' %}?next=/">Выход</a></button>
+    </p>
+    <p>
+        <a href="/api/orders" class="a">Заказы</a>
+        <a href="api/users" class="a">Пользователи</a>
+        <a href="api/packages" class="a">Пакеты</a>
+    </p>
+</main>
+<footer>
+    <span>2021</span>
+    <span>Ninel's Production</span>
+</footer>
+</body>
+</html>

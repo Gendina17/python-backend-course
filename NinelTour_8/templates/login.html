@@ -1,0 +1,17 @@
+{% load static %}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>NinelTour</title>
+    <link href="{% static 'css/index.css' %}" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/logo.ico' %}">
+  </head>
+<body>
+<button class="facebook_but">
+    <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+</button>
+<br>
+<a href="/" class="on_main">На главную</a>
+</body>
+</html>
