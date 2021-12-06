@@ -1,6 +1,9 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import AbstractUser
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from application.views import send_notification
 
 
 class User(AbstractUser):
@@ -20,3 +23,9 @@ class User(AbstractUser):
     class Meta:
         verbose_name_plural = "Клиенты"
         verbose_name = 'Клиент'
+
+
+@receiver(post_save, sender=User)
+def update_stock(sender, instance, created, **kwargs):
+    if created:
+        send_notification.delay(f"В базе данных был создан объект:\n\tКласс модели: {sender} \n\tИмя объекта: {instance}")

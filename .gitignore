@@ -48,3 +48,4 @@ test-journal
 .component-names.json
 .local-names.json
 db.sqlite3
+NinelTour_7_10/celerybeat-schedule.db

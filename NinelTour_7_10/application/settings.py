@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'users',
     'orders',
     'packages',
-    'rest_framework'
+    'rest_framework',
+    'django_celery_results',
+    'celery'
 ]
 
 MIDDLEWARE = [
@@ -129,3 +131,47 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # psql -U nina postgres
 # \du
 # \l
+
+from application import local_settings
+
+EMAIL_HOST = 'smtp.googlemail.com'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = local_settings.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = local_settings.EMAIL_HOST_PASSWORD
+
+ADMIN = ['test.testov.testovich2@gmail.com']
+
+CELERY_TIMEZONE = "Europe/Moscow"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
+
+CELERY_BEAT_SCHEDULE = {
+    'package_list': {
+        'task': 'packages.views.package_list',
+        'args': (1,),
+        'schedule': 10
+    },
+}
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': local_settings.NAME,
+        'USER': local_settings.USER,
+        'PASSWORD': local_settings.PASSWORD,
+        'HOST': local_settings.HOST,
+        'PORT': local_settings.PORT
+    }
+}
+
+CENTRIFUGE_SECRET = 'd4848d6f-d8cd-4c6d-a18a-32655285bdc7'
+CENTRIFUGE_TIMEOUT = 10
+CENTRIFUGO_HOST = "http://localhost"
+CENTRIFUGO_PORT = 8086
+CENTRIFUGO_HMAC_KEY = "8ebd71d8-729d-4cb4-9d44-19f8358ebb6f"
+CENTRIFUGO_API_KEY = "8578e510-9f78-4665-b49c-593e3dc79dc5"
+SITE_NAME = "ninel_tour"

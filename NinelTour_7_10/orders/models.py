@@ -1,6 +1,9 @@
 from django.db import models
 from users.models import User
 from packages.models import Package
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from application.views import send_notification
 
 
 class Order(models.Model):
@@ -24,3 +27,9 @@ class Order(models.Model):
     class Meta:
         verbose_name_plural = "Заказы"
         verbose_name = 'Заказ'
+
+
+@receiver(post_save, sender=Order)
+def update_stock(sender, instance, created, **kwargs):
+    if created:
+        send_notification.delay(f"В базе данных был создан объект:\n\tКласс модели: {sender} \n\tИмя объекта: {instance}")
