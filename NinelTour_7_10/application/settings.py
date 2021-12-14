@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'packages',
     'rest_framework',
     'django_celery_results',
-    'celery'
+    'celery',
+    'django_elasticsearch_dsl'
 ]
 
 MIDDLEWARE = [
@@ -175,3 +176,9 @@ CENTRIFUGO_PORT = 8086
 CENTRIFUGO_HMAC_KEY = "8ebd71d8-729d-4cb4-9d44-19f8358ebb6f"
 CENTRIFUGO_API_KEY = "8578e510-9f78-4665-b49c-593e3dc79dc5"
 SITE_NAME = "ninel_tour"
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'localhost:9200',
+    },
+}

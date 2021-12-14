@@ -4,7 +4,7 @@ from application.views import index
 from rest_framework.routers import DefaultRouter
 from orders.views import OrderViewSet
 from users.views import UserViewSet
-from packages.views import PackageViewSet
+from packages.views import PackageViewSet, search_package
 
 router = DefaultRouter()
 router.register(r'api/orders', OrderViewSet, basename='orders')
@@ -14,6 +14,7 @@ router.register(r'api/packages', PackageViewSet, basename='packages')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
+    path('packages/search', search_package),
 ]
 
 urlpatterns += router.urls

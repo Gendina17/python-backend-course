@@ -9,9 +9,9 @@ from application.views import send_notification
 class User(AbstractUser):
     GENDERS = [('m', 'Мужчина'), ('w', 'Женщина')]
 
-    birthday = models.DateField(null=False, verbose_name='Дата рождения')
-    gender = models.CharField(null=False, verbose_name='Пол', max_length=1, choices=GENDERS)
-    passport_number = models.CharField(null=False, max_length=6, verbose_name='Номер паспорта', unique=True)
+    birthday = models.DateField(null=True, verbose_name='Дата рождения')
+    gender = models.CharField(null=True, verbose_name='Пол', max_length=1, choices=GENDERS)
+    passport_number = models.CharField(null=True, max_length=6, verbose_name='Номер паспорта', unique=True)
     phone = models.CharField(null=True, max_length=12, verbose_name='Телефонный номер')
 
     def __str__(self):
