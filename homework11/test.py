@@ -46,10 +46,10 @@ class TestCalculatingDistance(unittest.TestCase):
         o = 'qwerty'
         x = 'awert'
         self.assertEqual(2, calculating_distance(a, b))
-        # self.assertEqual(2, calculating_distance(c, e))
-        # self.assertEqual(2, calculating_distance(f, t))
-        # self.assertEqual(1, calculating_distance(u, p))
-        # self.assertEqual(2, calculating_distance(o, x))
+        self.assertEqual(2, calculating_distance(c, e))
+        self.assertEqual(2, calculating_distance(f, t))
+        self.assertEqual(1, calculating_distance(u, p))
+        self.assertEqual(2, calculating_distance(o, x))
 
 if __name__ == '__main__':
     unittest.main()
